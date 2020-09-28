@@ -1,6 +1,17 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
+/* eslint-disable */
+
+import FirebaseVue from './firebase'
+
+Vue.use(FirebaseVue)
+
+//LIBS
+import './assets/libs'
+
+//STYLE
+import './assets/scss/app.scss'
 
 Vue.config.productionTip = false
 

@@ -1,29 +1,72 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+    <base-spinner />
+
+    <div class="container-fluid c-navigation" v-if="isLogged">
+      <div class="row">
+        <div class="col-2 c-navigation-sidebar">
+          <h1 class="c-navigation-title">Menu</h1>
+          <layout-navigation />
+        </div>
+        <div class="col">
+          <router-view />
+        </div>
+      </div>
     </div>
-    <router-view/>
+    <router-view v-else />
   </div>
 </template>
 
+<script>
+/* eslint-disable */
+import BaseSpinner from "./components/global/BaseSpinner";
+import LayoutNavigation from "./components/layout/LayoutNavigation";
+
+export default {
+  name: "App",
+  data() {
+    return {
+      isLogged: false,
+    };
+  },
+  components: {
+    BaseSpinner,
+    LayoutNavigation,
+  },
+  mounted() {
+    // listener handler que assiste quando ha login ou logout
+    this.$firebase.auth().onAuthStateChanged((user) => {
+      // se user existe
+      window.uid = user ? user.uid : null;
+
+      this.isLogged = !!user;
+
+      this.$router.push({ name: window.uid ? "home" : "login" });
+
+      setTimeout(() => {
+        this.$root.$emit("spinnerHide");
+      }, 300);
+    });
+  },
+  methods: {},
+};
+</script>
+
 <style lang="scss">
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+  min-height: 100vh;
+  color: var(--light);
+  background-color: var(--darker);
 }
-#nav {
-  padding: 30px;
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-    &.router-link-exact-active {
-      color: #42b983;
-    }
+
+.c-navigation {
+  &-sidebar {
+    background-color: var(--dark-medium);
+  }
+  &-title {
+    font-size: 24px;
+    margin-top: 10px;
+    text-align: center;
   }
 }
 </style>

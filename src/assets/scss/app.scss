@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;1,100&display=swap');
+@import 'variables';
+
+* {
+    font-family: sans-serif, 'Poppins';
+}
+
+.btn,
+.card,
+.alert,
+.form-control {
+    border-radius: 0 !important;
+}
+
+.btn-primary {
+    background-color: $featured;
+    border-color: $featured-dark;
+
+    &:hover {
+        background-color: $featured-dark;
+    }
+}
