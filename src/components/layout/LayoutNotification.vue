@@ -12,6 +12,8 @@
 </template>
 
 <script>
+/* eslint-disable */
+// TODO CRIAR EFEITOS DE TRANSICAO DE ENTRADA NA NOTIFICACAO COM CSS NO JS
 export default {
   data() {
     return {
