@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <base-spinner />
-
+    <layout-notification />
     <div class="container-fluid c-navigation" v-if="isLogged">
       <div class="row">
         <div class="col-2 c-navigation-sidebar">
@@ -21,6 +21,7 @@
 /* eslint-disable */
 import BaseSpinner from "./components/global/BaseSpinner";
 import LayoutNavigation from "./components/layout/LayoutNavigation";
+import LayoutNotification from "./components/layout/LayoutNotification";
 
 export default {
   name: "App",
@@ -32,6 +33,7 @@ export default {
   components: {
     BaseSpinner,
     LayoutNavigation,
+    LayoutNotification,
   },
   mounted() {
     // listener handler que assiste quando ha login ou logout
@@ -41,7 +43,9 @@ export default {
 
       this.isLogged = !!user;
 
-      this.$router.push({ name: window.uid ? "home" : "login" });
+      this.$router
+        .push({ name: window.uid ? "home" : "login" })
+        .catch(() => {});
 
       setTimeout(() => {
         this.$root.$emit("spinnerHide");

@@ -63,20 +63,39 @@ export default {
         // res.user.uid >> se estiver vazio o usuario não estara logado
         window.uid = res.user.uid;
       } catch (err) {
-        console.log(err);
+        let message = "";
+        switch (err.code) {
+          case "auth/user-not-found":
+            message = "Usuário não encontrado, tente novamente.";
+            break;
+
+          case "auth/wrong-password":
+            message = "Senha inválida, tente novamente.";
+            break;
+
+          default:
+            message =
+              "Erro ao fazer login, caso o erro persista tente mais tarde ou informe o administrador";
+        }
+
+        this.$root.$emit("notificationShow", {
+          message,
+          type: "danger",
+        });
       }
 
       setTimeout(() => {
         this.loading = false;
 
-        if (window.uid !== null) this.$router.push({ name: "home" });
+        if (window.uid !== null)
+          this.$router.push({ name: "home" }).catch(() => {});
       }, 2000);
     },
   },
   beforeRouteEnter(to, from, next) {
     next((vm) => {
       if (window.uid) {
-        vm.$router.push({ name: "home" });
+        vm.$router.push({ name: "home" }).catch(() => {});
       }
     });
   },

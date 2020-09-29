@@ -81,7 +81,12 @@
               >
                 Fechar
               </button>
-              <button class="btn btn-primary">Incluir nova despesa</button>
+              <button class="btn btn-primary" :disabled="loading">
+                <template v-if="loading">
+                  <i class="fa spin fa-spinner"></i> Incluindo ...
+                </template>
+                <template v-else>Incluir nova despesa </template>
+              </button>
             </div>
           </div>
         </div>
@@ -101,6 +106,7 @@ export default {
   name: "NewExpense",
   data() {
     return {
+      loading: false,
       showModal: false,
       form: {
         receipt: "",
@@ -132,6 +138,8 @@ export default {
     },
     async submit() {
       let url = "";
+
+      this.loading = true;
 
       try {
         this.$root.$emit("spinnerShow");
@@ -171,14 +179,29 @@ export default {
         // para incluir a transacao o set() cria uma nova entrada no banco e retorna um callback de erro 'err'
         ref.child(id).set(payload, (err) => {
           if (err) {
-            console.error(err);
+            this.$root.$emit("notificationShow", {
+              type: "danger",
+              message: "Não foi possivel inserir a despesa, tente novamente",
+            });
+            this.loading = false;
           } else {
+            this.$root.$emit("notificationShow", {
+              type: "success",
+              message: "Despesa inserida com sucesso!",
+            });
+
             this.closeModal();
+            this.loading = false;
           }
         });
       } catch (err) {
-        console.error(err);
+        this.$root.$emit("notificationShow", {
+          type: "danger",
+          message: "Não foi possivel inserir a despesa, tente novamente",
+        });
+        this.loading = false;
       } finally {
+        this.loading = false;
         this.$root.$emit("spinnerHide");
       }
     },
