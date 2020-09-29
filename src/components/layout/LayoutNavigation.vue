@@ -12,6 +12,8 @@
         <i class="fa" :class="`fa-${router.meta.icon}`"></i>
         {{ router.meta.title }}
       </router-link>
+      <hr />
+      <layout-new-expense />
     </div>
 
     <layout-logout />
@@ -21,11 +23,13 @@
 <script>
 /* eslint-disable */
 import LayoutLogout from "./LayoutLogout";
+import LayoutNewExpense from "./LayoutNewExpense";
 
 export default {
   name: "LayoutNavigation",
   components: {
     LayoutLogout,
+    LayoutNewExpense,
   },
   computed: {
     routerLinks() {
