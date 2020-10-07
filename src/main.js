@@ -5,6 +5,8 @@ import router from './router'
 
 import FirebaseVue from './firebase'
 
+import './utils/directives'
+
 Vue.use(FirebaseVue)
 
 //LIBS

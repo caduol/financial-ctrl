@@ -3,21 +3,21 @@
     <div class="row">
       <div class="col-6 c-home-box">
         <small>Despesas</small>
-        <div class="money">R$ 900.00</div>
+        <div class="money" v-money-format="totals.totalSpend" />
         <small>30 eventos de compra</small>
       </div>
       <div class="col-6 c-home-box">
         <small>A media de gastos</small>
-        <div class="money">R$ 90.00</div>
+        <div class="money" v-money-format="totals.average" />
       </div>
       <div class="col-6 c-home-box">
         <small>A maior compra</small>
-        <div class="money">R$ 290.00</div>
+        <div class="money" v-money-format="totals.biggest.value" />
         <small>No dia 12/09/2020</small>
       </div>
       <div class="col-6 c-home-box">
         <small>A menor compra</small>
-        <div class="money">R$ 70.00</div>
+        <div class="money" v-money-format="totals.lowest.value" />
         <small>No dia 22/09/2020</small>
       </div>
     </div>
@@ -32,6 +32,31 @@ export default {
     return {
       expenses: [],
     };
+  },
+  computed: {
+    totals() {
+      const { expenses: exp } = this;
+
+      const values = {
+        totalSpend: 0,
+        average: 0,
+        biggest: {},
+        lowest: {},
+      };
+
+      if (exp.length) {
+        values.totalSpend = exp
+          .map((e) => +e.value)
+          .reduce((acc, cur) => acc + cur, 0);
+
+        values.average = values.totalSpend / exp.length;
+
+        values.biggest = exp.sort((a, b) => b.value - a.value)[0];
+        values.lowest = exp.sort((a, b) => a.value - b.value)[0];
+      }
+
+      return values;
+    },
   },
   methods: {
     getData() {

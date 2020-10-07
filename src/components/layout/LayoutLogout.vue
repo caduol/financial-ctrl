@@ -15,7 +15,7 @@ export default {
 
       await this.$firebase.auth().signOut();
 
-      this.$router.push({ name: "login" });
+      this.$router.push({ name: "login" }).catch(() => {});
 
       this.$root.$emit("spinner-hide");
     },
