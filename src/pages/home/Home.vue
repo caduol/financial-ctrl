@@ -2,7 +2,7 @@
   <div class="c-home">
     <div class="row">
       <div class="col-6 c-home-box">
-        <!-- proximo passo formatar data -->
+        <!-- proximo passo formatar data - implementar o moment js -->
         <small>Despesas</small>
         <div class="money" v-money-format="totals.totalSpend" />
         <small>30 eventos de compra</small>
