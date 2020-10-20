@@ -26,6 +26,7 @@
 
 <script>
 // eslint-disable-next-line
+// fazer merge com develop
 export default {
   name: "Home",
   data() {
