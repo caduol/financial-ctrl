@@ -5,7 +5,7 @@
         <!-- proximo passo formatar data - implementar o moment js -->
         <small>Despesas</small>
         <div class="money" v-money-format="totals.totalSpend" />
-        <small>30 eventos de compra</small>
+        <small>{{ expenses.length }} eventos de compra</small>
       </div>
       <div class="col-6 c-home-box">
         <small>A media de gastos</small>
@@ -14,12 +14,12 @@
       <div class="col-6 c-home-box">
         <small>A maior compra</small>
         <div class="money" v-money-format="totals.biggest.value" />
-        <small>No dia 12/09/2020</small>
+        <small v-date-formate="totals.biggest.createdAt" />
       </div>
       <div class="col-6 c-home-box">
         <small>A menor compra</small>
         <div class="money" v-money-format="totals.lowest.value" />
-        <small>No dia 22/09/2020</small>
+        <small v-date-formate="totals.lowest.createdAt" />
       </div>
     </div>
   </div>
