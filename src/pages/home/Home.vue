@@ -14,12 +14,12 @@
       <div class="col-6 c-home-box">
         <small>A maior compra</small>
         <div class="money" v-money-format="totals.biggest.value" />
-        <small v-date-formate="totals.biggest.createdAt" />
+        <small v-date-format="totals.biggest.createdAt" />
       </div>
       <div class="col-6 c-home-box">
         <small>A menor compra</small>
         <div class="money" v-money-format="totals.lowest.value" />
-        <small v-date-formate="totals.lowest.createdAt" />
+        <small v-date-format="totals.lowest.createdAt" />
       </div>
     </div>
   </div>
@@ -52,8 +52,8 @@ export default {
           .reduce((acc, cur) => acc + cur, 0);
 
         values.average = values.totalSpend / exp.length;
-
         values.biggest = exp.sort((a, b) => b.value - a.value)[0];
+
         values.lowest = exp.sort((a, b) => a.value - b.value)[0];
       }
 
