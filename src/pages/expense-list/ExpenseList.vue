@@ -1,21 +1,9 @@
 <template>
   <!-- //TODO VERIFICAR REGRAS FB -->
   <div class="months-navigation">
-    <div class="month-link">
-      <div class="month-label">01/2019</div>
-      <div class="value-label">R$ 92.22</div>
-    </div>
-    <div class="month-link">
-      <div class="month-label">02/2019</div>
-      <div class="value-label">R$ 92.22</div>
-    </div>
-    <div class="month-link">
-      <div class="month-label">03/2019</div>
-      <div class="value-label">R$ 92.22</div>
-    </div>
-    <div class="month-link">
-      <div class="month-label">04/2019</div>
-      <div class="value-label">R$ 92.22</div>
+    <div class="month-link" v-for="(month, i) in groupedMounths" :key="i">
+      <div class="month-label">{{ month.month }}</div>
+      <div class="value-label" v-money-format="month.total" />
     </div>
   </div>
 </template>
@@ -41,7 +29,7 @@ export default {
         );
 
         // ordenando o array de datas conforme o ano
-        return Object.keys(months).sort((a, b) => {
+        const sortedMonths = Object.keys(months).sort((a, b) => {
           const pattern = "MM/YYYY HH";
           if (moment(`${a} 01`, pattern).isBefore(moment(`${b} 01`, pattern))) {
             return -1;
@@ -49,6 +37,14 @@ export default {
             return +1;
           }
         });
+
+        return sortedMonths.map((month) => ({
+          month,
+          data: months[month],
+          total: months[month]
+            .map((i) => +i.value)
+            .reduce((acc, cur) => acc + cur, 0),
+        }));
       } else {
         return [];
       }
