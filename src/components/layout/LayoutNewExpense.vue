@@ -1,7 +1,7 @@
 <template>
   <div class="c-add-expense">
     <button
-      class="btn btn-md btn-outline-primary w-75"
+      class="btn btn-md btn-outline-primary w-85"
       @click="showModal = true"
     >
       <i class="fa fa-plus"></i> Nova Despesa
